@@ -1,4 +1,4 @@
-package tungnn.tutor.java.spring.web.client.controller;
+package tungnn.tutor.java.spring.web.api.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
