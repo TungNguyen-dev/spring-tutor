@@ -1,8 +1,8 @@
 package tungnn.tutor.java.spring.core.context.xml;
 
-import tungnn.tutor.java.spring.core.context.xml.bean.BeanSample;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import tungnn.tutor.java.spring.core.context.xml.bean.BeanSample;
 
 public class XMLBasedContextApplication {
 

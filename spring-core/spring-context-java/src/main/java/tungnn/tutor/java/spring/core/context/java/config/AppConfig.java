@@ -1,9 +1,9 @@
 package tungnn.tutor.java.spring.core.context.java.config;
 
-import tungnn.tutor.java.spring.core.context.java.bean.BeanSample;
-import tungnn.tutor.java.spring.core.context.java.bean.impl.BeanSampleImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tungnn.tutor.java.spring.core.context.java.bean.BeanSample;
+import tungnn.tutor.java.spring.core.context.java.bean.impl.BeanSampleImpl;
 
 @Configuration
 public class AppConfig {

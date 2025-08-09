@@ -64,7 +64,7 @@ public class LoggingAspect {
     String methodName = joinPoint.getSignature().getName();
     System.out.println("[@After         ] Method: " + methodName + " has finished execution");
   }
-  
+
   @Around("execution(* tungnn.tutor.java.spring.core.aop.service.BeanService.*(..))")
   public Object logDetailsAround(ProceedingJoinPoint joinPoint) throws Throwable {
     long startTime = System.currentTimeMillis();
@@ -75,8 +75,12 @@ public class LoggingAspect {
     Object result = joinPoint.proceed();
 
     long endTime = System.currentTimeMillis();
-    System.out.println("[@Around        ] Method: " + methodName + " - execution completed in "
-        + (endTime - startTime) + "ms");
+    System.out.println(
+        "[@Around        ] Method: "
+            + methodName
+            + " - execution completed in "
+            + (endTime - startTime)
+            + "ms");
 
     return result;
   }

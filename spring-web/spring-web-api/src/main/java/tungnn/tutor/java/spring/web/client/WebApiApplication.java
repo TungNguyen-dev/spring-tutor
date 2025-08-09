@@ -1,4 +1,4 @@
-package tungnn.tutor.java.spring.web.api;
+package tungnn.tutor.java.spring.web.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

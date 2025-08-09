@@ -1,12 +1,12 @@
 package tungnn.tutor.java.spring.core.context.java;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import tungnn.tutor.java.spring.core.context.java.bean.BeanSample;
 import tungnn.tutor.java.spring.core.context.java.bean.ControllerSample;
 import tungnn.tutor.java.spring.core.context.java.bean.RepositorySample;
 import tungnn.tutor.java.spring.core.context.java.bean.ServiceSample;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan
 public class JavaBasedContextApplication {

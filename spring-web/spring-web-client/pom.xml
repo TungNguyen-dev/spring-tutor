@@ -11,11 +11,11 @@
     </parent>
 
     <groupId>tungnn.tutor.java.spring.web</groupId>
-    <artifactId>spring-web-api</artifactId>
+    <artifactId>spring-web-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>spring-web-api</name>
-    <description>spring-web-api</description>
+    <name>spring-web-client</name>
+    <description>spring-web-client</description>
 
     <properties>
         <java.version>24</java.version>

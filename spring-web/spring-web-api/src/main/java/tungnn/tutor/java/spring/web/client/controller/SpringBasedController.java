@@ -1,4 +1,4 @@
-package tungnn.tutor.java.spring.web.api.controller;
+package tungnn.tutor.java.spring.web.client.controller;
 
 import org.springframework.web.bind.annotation.*;
 
