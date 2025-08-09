@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Submission Result</title>
+    <style>
+        .result-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .result-item {
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="result-container">
+    <h2>Form Submission Result</h2>
+    <div class="result-item">
+        <span class="label">Name:</span>
+        <span th:text="${submittedUser.name}">John Doe</span>
+    </div>
+    <div class="result-item">
+        <span class="label">Email:</span>
+        <span th:text="${submittedUser.email}">john@example.com</span>
+    </div>
+    <div class="result-item">
+        <a href="/view/form">Submit Another Form</a>
+    </div>
+</div>
+</body>
+</html>
