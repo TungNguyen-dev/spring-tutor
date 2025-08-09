@@ -6,5 +6,5 @@
            https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- Define your bean -->
-    <bean id="beanSample" class="com.tungnn.tutor.java.spring.core.context.xml.bean.BeanSample"/>
+    <bean id="beanSample" class="tungnn.tutor.java.spring.core.context.xml.bean.BeanSample"/>
 </beans>
