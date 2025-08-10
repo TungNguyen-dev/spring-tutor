@@ -4,7 +4,7 @@ server:
     context-path: /api/hr
 spring:
   application:
-    name: spring-data-rest-repository
+    name: spring-data-REST
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}

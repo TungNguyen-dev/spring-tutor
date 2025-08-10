@@ -9,10 +9,10 @@
         <version>3.5.4</version>
     </parent>
     <groupId>tungnn.tutor.java.spring.data.rest</groupId>
-    <artifactId>spring-rest-repository</artifactId>
+    <artifactId>spring-data-REST</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-rest-repository</name>
-    <description>spring-rest-repository</description>
+    <name>spring-data-REST</name>
+    <description>spring-data-REST</description>
     <properties>
         <java.version>24</java.version>
     </properties>
@@ -39,6 +39,11 @@
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>annotationProcessor</scope>
         </dependency>
     </dependencies>
 
