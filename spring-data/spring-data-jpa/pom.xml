@@ -9,7 +9,7 @@
         <version>3.5.4</version>
     </parent>
     <groupId>tungnn.tutor.java.spring.data.jpa</groupId>
-    <artifactId>spring-jpa-started</artifactId>
+    <artifactId>spring-data-jpa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-jpa-started</name>
     <description>spring-jpa-started</description>
