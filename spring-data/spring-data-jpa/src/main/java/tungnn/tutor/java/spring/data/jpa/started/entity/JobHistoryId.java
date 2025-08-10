@@ -16,7 +16,7 @@ import lombok.Setter;
 public class JobHistoryId implements Serializable {
   @Serial private static final long serialVersionUID = 4210536596037693643L;
 
-  @Column(name = "EMPLOYEE_ID", nullable = false)
+  @Column(name = "EMPLOYEE_ID", nullable = false, insertable = false, updatable = false)
   private Integer employeeId;
 
   @Column(name = "START_DATE", nullable = false)
