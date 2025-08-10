@@ -13,20 +13,26 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "LOCATIONS", schema = "HR")
+@Getter
+@Setter
+@EqualsAndHashCode(of = "locationId")
 public class Location {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LOCATIONS_id_gen")
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locations_id_gen")
   @SequenceGenerator(
-      name = "LOCATIONS_id_gen",
+      name = "locations_id_gen",
       sequenceName = "LOCATIONS_SEQ",
       allocationSize = 100)
   @Column(name = "LOCATION_ID", nullable = false)
-  private Short id;
+  private Short locationId;
 
   @Column(name = "STREET_ADDRESS", length = 40)
   private String streetAddress;
@@ -45,63 +51,6 @@ public class Location {
   @JoinColumn(name = "COUNTRY_ID")
   private Country country;
 
-  @OneToMany
-  @JoinColumn(name = "LOCATION_ID")
+  @OneToMany(mappedBy = "location")
   private Set<Department> departments = new LinkedHashSet<>();
-
-  public Short getId() {
-    return id;
-  }
-
-  public void setId(Short id) {
-    this.id = id;
-  }
-
-  public String getStreetAddress() {
-    return streetAddress;
-  }
-
-  public void setStreetAddress(String streetAddress) {
-    this.streetAddress = streetAddress;
-  }
-
-  public String getPostalCode() {
-    return postalCode;
-  }
-
-  public void setPostalCode(String postalCode) {
-    this.postalCode = postalCode;
-  }
-
-  public String getCity() {
-    return city;
-  }
-
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public String getStateProvince() {
-    return stateProvince;
-  }
-
-  public void setStateProvince(String stateProvince) {
-    this.stateProvince = stateProvince;
-  }
-
-  public Country getCountry() {
-    return country;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
-  }
-
-  public Set<Department> getDepartments() {
-    return departments;
-  }
-
-  public void setDepartments(Set<Department> departments) {
-    this.departments = departments;
-  }
 }

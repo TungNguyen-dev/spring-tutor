@@ -10,11 +10,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "COUNTRIES", schema = "HR")
+@Getter
+@Setter
+@EqualsAndHashCode(of = "countryId")
 public class Country {
   @Id
   @Column(name = "COUNTRY_ID", nullable = false, length = 2)
@@ -28,39 +34,6 @@ public class Country {
   @JoinColumn(name = "REGION_ID")
   private Region region;
 
-  @OneToMany
-  @JoinColumn(name = "COUNTRY_ID")
+  @OneToMany(mappedBy = "country")
   private Set<Location> locations = new LinkedHashSet<>();
-
-  public String getCountryId() {
-    return countryId;
-  }
-
-  public void setCountryId(String countryId) {
-    this.countryId = countryId;
-  }
-
-  public String getCountryName() {
-    return countryName;
-  }
-
-  public void setCountryName(String countryName) {
-    this.countryName = countryName;
-  }
-
-  public Region getRegion() {
-    return region;
-  }
-
-  public void setRegion(Region region) {
-    this.region = region;
-  }
-
-  public Set<Location> getLocations() {
-    return locations;
-  }
-
-  public void setLocations(Set<Location> locations) {
-    this.locations = locations;
-  }
 }
