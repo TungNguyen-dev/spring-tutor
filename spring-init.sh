@@ -58,26 +58,38 @@ RUN_AFTER="false"
 # Parse options
 while getopts ":g:D:b:J:B:p:l:frh" opt; do
   case $opt in
-    g) GROUP_ID="$OPTARG" ;;
-    D) DEPS="$OPTARG" ;;
-    b) BUILD="$OPTARG" ;;
-    J) JAVA_VERSION="$OPTARG" ;;
-    B) BOOT_VERSION="$OPTARG" ;;
-    p) PACKAGING="$OPTARG" ;;
-    l) LANGUAGE="$OPTARG" ;;
-    f) FORCE="true" ;;
-    r) RUN_AFTER="true" ;;
-    h) usage; exit 0 ;;
-    :) echo "Option -$OPTARG requires an argument" >&2; exit 1 ;;
-    \?) echo "Unknown option: -$OPTARG" >&2; exit 1 ;;
+  g) GROUP_ID="$OPTARG" ;;
+  D) DEPS="$OPTARG" ;;
+  b) BUILD="$OPTARG" ;;
+  J) JAVA_VERSION="$OPTARG" ;;
+  B) BOOT_VERSION="$OPTARG" ;;
+  p) PACKAGING="$OPTARG" ;;
+  l) LANGUAGE="$OPTARG" ;;
+  f) FORCE="true" ;;
+  r) RUN_AFTER="true" ;;
+  h)
+    usage
+    exit 0
+    ;;
+  :)
+    echo "Option -$OPTARG requires an argument" >&2
+    exit 1
+    ;;
+  \?)
+    echo "Unknown option: -$OPTARG" >&2
+    exit 1
+    ;;
   esac
 done
 
 # Validate build
 case "$BUILD" in
-  maven|gradle) ;;
-  *) echo "Error: --build must be maven or gradle" >&2; exit 1 ;;
- esac
+maven | gradle) ;;
+*)
+  echo "Error: --build must be maven or gradle" >&2
+  exit 1
+  ;;
+esac
 
 # Compute package name: groupId + sanitized project name
 SANITIZED_PROJ=$(echo "$PROJECT_NAME" | tr '-' '_' | tr -cd '[:alnum:]_')
@@ -94,15 +106,15 @@ if [[ -d "$TARGET_DIR" ]]; then
 fi
 
 # Build base spring init command
-INIT_CMD=(spring init --extract \
-  --build "$BUILD" \
-  --language "$LANGUAGE" \
-  --java-version "$JAVA_VERSION" \
-  --packaging "$PACKAGING" \
-  -g "$GROUP_ID" \
-  -a "$PROJECT_NAME" \
-  -n "$PROJECT_NAME" \
-  --package-name "$PACKAGE_NAME" \
+INIT_CMD=(spring init --extract
+  --build "$BUILD"
+  --language "$LANGUAGE"
+  --java-version "$JAVA_VERSION"
+  --packaging "$PACKAGING"
+  -g "$GROUP_ID"
+  -a "$PROJECT_NAME"
+  -n "$PROJECT_NAME"
+  --package-name "$PACKAGE_NAME"
   -d "$DEPS")
 
 if [[ -n "$BOOT_VERSION" ]]; then
@@ -146,4 +158,3 @@ else
     echo "  cd $TARGET_DIR && ./gradlew bootRun"
   fi
 fi
-
