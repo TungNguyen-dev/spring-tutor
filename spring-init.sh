@@ -45,7 +45,7 @@ if [[ -z "$PROJECT_NAME" ]]; then
 fi
 
 # Defaults
-GROUP_ID="com.example"
+GROUP_ID="tungnn.tutor.java.spring"
 DEPS="web"
 BUILD="maven"
 JAVA_VERSION="21"
