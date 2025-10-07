@@ -13,14 +13,19 @@ public class BeanInjectionConfig {
    * Field inject
    */
   @Autowired private BeanSample beanSample;
-  private BeanSample beanInjectedConstructor;
 
   {
     System.out.println("Field inject: " + beanSample);
   }
 
+  /*
+   * Constructor inject
+   */
+  private BeanSample beanInjectedConstructor;
+
   public BeanInjectionConfig(@Qualifier("beanSample") BeanSample beanInjectedConstructor) {
-    System.out.println("Constructor inject: " + beanInjectedConstructor);
+    this.beanInjectedConstructor = beanInjectedConstructor;
+    System.out.println("Constructor injected: " + this.beanInjectedConstructor);
   }
 
   /*
