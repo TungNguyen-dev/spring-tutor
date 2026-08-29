@@ -1,0 +1,11 @@
+package tungnn.tutor.java.spring.infrastructure.genai.llm;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class SpringLlmApplicationTests {
+
+  @Test
+  void contextLoads() {}
+}
