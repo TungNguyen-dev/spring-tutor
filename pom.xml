@@ -26,6 +26,7 @@
 
     <modules>
         <module>modules/spring-core</module>
+        <module>modules/spring-tool</module>
     </modules>
 
     <dependencies>
