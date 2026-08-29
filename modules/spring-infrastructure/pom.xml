@@ -10,8 +10,8 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>tungnn.tutor.java.spring.tool</groupId>
-    <artifactId>spring-tool</artifactId>
+    <groupId>tungnn.tutor.java.spring.infrastructure</groupId>
+    <artifactId>spring-infrastructure</artifactId>
     <packaging>pom</packaging>
 
     <modules></modules>
