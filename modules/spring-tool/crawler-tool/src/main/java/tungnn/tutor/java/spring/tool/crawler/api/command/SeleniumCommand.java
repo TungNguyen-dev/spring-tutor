@@ -1,7 +1,9 @@
 package tungnn.tutor.java.spring.tool.crawler.api.command;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.shell.core.command.annotation.Command;
 import org.springframework.shell.core.command.annotation.CommandGroup;
 import org.springframework.stereotype.Component;
 import tungnn.tutor.java.infrastructure.pool.webdriver.WebDriverPool;
+import tungnn.tutor.java.selenium.util.WindowUtil;
 
 @Component
 @CommandGroup(name = "Selenium Command")
@@ -39,9 +42,14 @@ public class SeleniumCommand {
 
     LOGGER.info("Đang khởi tạo {} WebDrivers...", numOfDrivers);
 
-    List<WebDriver> list = new ArrayList<>(numOfDrivers);
-    for (int i = 0; i < numOfDrivers; i++) {
-      list.add(webDriverPool.getDriver());
+    List<WebDriver> list;
+    try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+      List<CompletableFuture<WebDriver>> futures =
+          IntStream.range(0, numOfDrivers)
+              .mapToObj(i -> CompletableFuture.supplyAsync(webDriverPool::getDriver, executor))
+              .toList();
+
+      list = futures.stream().map(CompletableFuture::join).toList();
     }
 
     var writer = ctx.outputWriter();
