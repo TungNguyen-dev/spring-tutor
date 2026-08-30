@@ -13,4 +13,4 @@ crawler:
     output: 02-result
     done: 03-done
   pool:
-    size: 4
+    size: ${CRAWLER_POOL_SIZE:1}

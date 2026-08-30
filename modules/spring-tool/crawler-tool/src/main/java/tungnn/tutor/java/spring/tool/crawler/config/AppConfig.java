@@ -13,6 +13,12 @@ import tungnn.tutor.java.tool.crawler.core.PooledContentCrawler;
 @Configuration
 public class AppConfig {
 
+  private final CrawlerConfig crawlerConfig;
+
+  public AppConfig(CrawlerConfig crawlerConfig) {
+    this.crawlerConfig = crawlerConfig;
+  }
+
   @Bean
   public WebDriverFactory driverFactory() {
     return new ChromeWebDriverFactory(new ChromeOptionsFactory());
@@ -20,7 +26,7 @@ public class AppConfig {
 
   @Bean
   public WebDriverPool driverPool(WebDriverFactory driverFactory) {
-    return new PooledWebDriverPool(driverFactory, 4);
+    return new PooledWebDriverPool(driverFactory, crawlerConfig.poolSize());
   }
 
   @Bean
