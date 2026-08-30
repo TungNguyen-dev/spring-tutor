@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-llm
+  config:
+    import:
+      - "classpath:spring-llm.yaml"

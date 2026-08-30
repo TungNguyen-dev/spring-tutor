@@ -16,6 +16,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>modules/spring-llm</module>
+        <module>spring-llm</module>
     </modules>
 </project>

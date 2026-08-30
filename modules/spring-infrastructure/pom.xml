@@ -17,4 +17,18 @@
     <modules>
         <module>modules/spring-genai</module>
     </modules>
+
+    <!-- All modules under spring-infrastructure are libraries.
+    Do not repackage them as Spring Boot executable JARs. -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

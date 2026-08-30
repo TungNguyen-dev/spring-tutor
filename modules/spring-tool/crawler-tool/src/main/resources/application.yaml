@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: crawler-tool
+  config:
+    import:
+      - "classpath:spring-llm.yaml"
+      - "optional:classpath:spring-shell.yaml"
+crawler:
+  storage:
+    base: storage/app/crawler
+  dir:
+    input: 01-todo
+    output: 02-result
+    done: 03-done
+  pool:
+    size: 4
