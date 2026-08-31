@@ -15,26 +15,27 @@ import tungnn.tutor.java.spring.tool.crawler.config.CrawlerConfig;
 import tungnn.tutor.java.spring.tool.crawler.model.CrawlRequest;
 import tungnn.tutor.java.spring.tool.crawler.model.CrawlResult;
 import tungnn.tutor.java.spring.tool.crawler.service.ArticleCrawlService;
+import tungnn.tutor.java.tool.crawler.core.BatchCrawlExecutor;
 import tungnn.tutor.java.tool.crawler.core.ContentCrawlRequest;
 import tungnn.tutor.java.tool.crawler.core.ContentCrawlResult;
-import tungnn.tutor.java.tool.crawler.core.ContentCrawler;
 import tungnn.tutor.java.tool.crawler.obsidian.ObsidianNote;
 
 @Service
 public class ArticleCrawlServiceImpl implements ArticleCrawlService {
 
   private final CrawlerConfig crawlerConfig;
-  private final ContentCrawler contentCrawler;
+  private final BatchCrawlExecutor batchCrawlExecutor;
 
-  public ArticleCrawlServiceImpl(CrawlerConfig crawlerConfig, ContentCrawler contentCrawler) {
+  public ArticleCrawlServiceImpl(
+      CrawlerConfig crawlerConfig, BatchCrawlExecutor batchCrawlExecutor) {
     this.crawlerConfig = crawlerConfig;
-    this.contentCrawler = contentCrawler;
+    this.batchCrawlExecutor = batchCrawlExecutor;
   }
 
   @Override
   public CrawlResult crawlArticles(CrawlRequest request) {
     if (request == null || request.courses() == null || request.courses().isEmpty()) {
-      return new CrawlResult(List.of());
+      return new CrawlResult(List.of(), true);
     }
 
     var resultsByUrl = executeBatchCrawl(request.courses());
@@ -42,7 +43,10 @@ public class ArticleCrawlServiceImpl implements ArticleCrawlService {
     List<CrawlResult.Course> resultCourses =
         request.courses().stream().map(course -> processCourse(course, resultsByUrl)).toList();
 
-    return new CrawlResult(resultCourses);
+    // Toàn bộ request được coi là thành công nếu tất cả các course đều thành công
+    boolean overallSuccess = resultCourses.stream().allMatch(CrawlResult.Course::success);
+
+    return new CrawlResult(resultCourses, overallSuccess);
   }
 
   private LinkedHashMap<String, ContentCrawlResult> executeBatchCrawl(
@@ -56,7 +60,7 @@ public class ArticleCrawlServiceImpl implements ArticleCrawlService {
             .map(ContentCrawlRequest::new)
             .toList();
 
-    return contentCrawler.crawlBatch(crawlRequests).stream()
+    return batchCrawlExecutor.crawlBatch(crawlRequests).stream()
         .collect(
             Collectors.toMap(
                 ContentCrawlResult::url,
@@ -76,6 +80,7 @@ public class ArticleCrawlServiceImpl implements ArticleCrawlService {
     FileUtil.createDirectories(courseOutputDir);
 
     List<Path> generatedPaths = new ArrayList<>();
+    boolean courseSuccess = true;
 
     for (String articleUrl : course.articleUrls()) {
       int unitNumber = unitCounter.incrementAndGet();
@@ -83,6 +88,7 @@ public class ArticleCrawlServiceImpl implements ArticleCrawlService {
 
       if (result == null || !result.isSuccess()) {
         System.err.printf("Crawl failed [%d/%d]: %s%n", unitNumber, totalUnits, articleUrl);
+        courseSuccess = false; // Đánh dấu course thất bại nếu có ít nhất 1 bài viết fail
         continue;
       }
 
@@ -90,7 +96,7 @@ public class ArticleCrawlServiceImpl implements ArticleCrawlService {
       generatedPaths.add(filePath);
     }
 
-    return new CrawlResult.Course(course.courseName(), generatedPaths);
+    return new CrawlResult.Course(course.courseName(), generatedPaths, courseSuccess);
   }
 
   private Path writeResultToFile(

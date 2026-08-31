@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.shell.core.command.annotation.Command;
@@ -59,9 +61,34 @@ public class CrawlCommand {
 
     CrawlResult result = articleCrawlService.crawlArticles(new CrawlRequest(courses));
 
-    sourceFiles.forEach(source -> moveSourceToDoneDir(source.path()));
+    Set<String> successfulCourseNames =
+        result.courses().stream()
+            .filter(CrawlResult.Course::success)
+            .map(CrawlResult.Course::courseName)
+            .collect(Collectors.toSet());
 
-    LOGGER.info("Crawling completed for {} course(s).", result.courses().size());
+    List<CourseSourceFile> successfulFiles =
+        sourceFiles.stream()
+            .filter(source -> successfulCourseNames.contains(source.fileName()))
+            .toList();
+
+    List<CourseSourceFile> failedFiles =
+        sourceFiles.stream()
+            .filter(source -> !successfulCourseNames.contains(source.fileName()))
+            .toList();
+
+    successfulFiles.forEach(source -> moveSourceToDoneDir(source.path()));
+
+    LOGGER.info(
+        "Crawling completed. Moved {} successful file(s) to done directory.",
+        successfulFiles.size());
+
+    if (!failedFiles.isEmpty()) {
+      LOGGER.warn(
+          "{} course file(s) failed or contained failed articles and remain in input directory: {}",
+          failedFiles.size(),
+          failedFiles.stream().map(CourseSourceFile::fileName).toList());
+    }
   }
 
   private List<CourseSourceFile> loadCourseSourceFiles() {

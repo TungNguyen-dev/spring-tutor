@@ -7,6 +7,7 @@ import tungnn.tutor.java.infrastructure.pool.webdriver.WebDriverPool;
 import tungnn.tutor.java.selenium.driver.ChromeWebDriverFactory;
 import tungnn.tutor.java.selenium.driver.WebDriverFactory;
 import tungnn.tutor.java.selenium.driver.options.ChromeOptionsFactory;
+import tungnn.tutor.java.tool.crawler.core.BatchCrawlExecutor;
 import tungnn.tutor.java.tool.crawler.core.ContentCrawler;
 import tungnn.tutor.java.tool.crawler.core.PooledContentCrawler;
 
@@ -32,5 +33,10 @@ public class AppConfig {
   @Bean
   public ContentCrawler contentCrawler(WebDriverPool driverPool) {
     return new PooledContentCrawler(driverPool);
+  }
+
+  @Bean
+  public BatchCrawlExecutor batchCrawlExecutor(ContentCrawler contentCrawler) {
+    return new BatchCrawlExecutor(contentCrawler);
   }
 }

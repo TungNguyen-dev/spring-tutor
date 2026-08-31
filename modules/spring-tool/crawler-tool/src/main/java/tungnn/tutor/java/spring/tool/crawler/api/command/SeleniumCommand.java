@@ -13,7 +13,6 @@ import org.springframework.shell.core.command.annotation.Command;
 import org.springframework.shell.core.command.annotation.CommandGroup;
 import org.springframework.stereotype.Component;
 import tungnn.tutor.java.infrastructure.pool.webdriver.WebDriverPool;
-import tungnn.tutor.java.selenium.util.WindowUtil;
 
 @Component
 @CommandGroup(name = "Selenium Command")
