@@ -77,13 +77,32 @@ public class CrawlCommand {
             .filter(source -> !successfulCourseNames.contains(source.fileName()))
             .toList();
 
-    successfulFiles.forEach(source -> moveSourceToDoneDir(source.path()));
+    successfulFiles.forEach(
+        source -> {
+          try {
+            moveSourceToDoneDir(source.path());
+          } catch (Exception e) {
+            LOGGER.error("Failed to move file to done dir: {}", source.path(), e);
+          }
+        });
 
     LOGGER.info(
         "Crawling completed. Moved {} successful file(s) to done directory.",
         successfulFiles.size());
 
     if (!failedFiles.isEmpty()) {
+      failedFiles.forEach(
+          source -> {
+            try {
+              Path outputPath = crawlerConfig.outputDir().resolve(source.fileName());
+              if (Files.exists(outputPath)) {
+                FileUtil.deleteRecursively(outputPath);
+              }
+            } catch (Exception e) {
+              LOGGER.error("Failed to cleanup failed file: {}", source.fileName(), e);
+            }
+          });
+
       LOGGER.warn(
           "{} course file(s) failed or contained failed articles and remain in input directory: {}",
           failedFiles.size(),

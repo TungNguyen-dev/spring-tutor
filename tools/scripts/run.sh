@@ -8,22 +8,45 @@ if [ -z "$1" ]; then
 fi
 
 JAR_FILE="$1"
-# Cho phép tùy chỉnh file .env ở arg 2 (mặc định là .env nếu không truyền)
 ENV_FILE="${2:-.env}"
 
-# 2. Kiểm tra file .env và load biến môi trường
+# 2. Load file .env và xử lý từng dòng
 if [ -f "$ENV_FILE" ]; then
-    echo "Loading environment variables from $ENV_FILE..."
+    echo "=========================================="
+    echo " Loading environment variables from $ENV_FILE..."
+    echo "=========================================="
 
+    # Bật tự động export tất cả các biến khai báo
     set -a
-    # shellcheck disable=SC1090
-    source <(grep -v '^#' "$ENV_FILE" | grep -v '^[[:space:]]*$')
+
+    # Đọc file .env từng dòng một, lọc bỏ \r (Windows format)
+    while IFS= read -r line || [ -n "$line" ]; do
+        # Xóa ký tự \r (CRLF) và khoảng trắng đầu/cuối
+        clean_line=$(echo "$line" | tr -d '\r' | xargs)
+
+        # Bỏ qua dòng trống hoặc dòng bắt đầu bằng dấu #
+        if [[ -z "$clean_line" || "$clean_line" =~ ^# ]]; then
+            continue
+        fi
+
+        # Export dòng hiện tại
+        export "$clean_line" 2>/dev/null
+
+        # In log debug từng biến được nạp thành công
+        key="${clean_line%%=*}"
+        val="${clean_line#*=}"
+        echo "  - $key = $val"
+
+    done < "$ENV_FILE"
+
+    # Tắt tự động export
     set +a
+    echo "=========================================="
 else
-    echo "Warning: File $ENV_FILE không tồn tại. Tiếp tục chạy với biến mặc định."
+    echo "Warning: File $ENV_FILE không tồn tại. Tiếp tục chạy với cấu hình mặc định."
 fi
 
-# 3. Kiểm tra file JAR có tồn tại không
+# 3. Kiểm tra file JAR
 if [ ! -f "$JAR_FILE" ]; then
     echo "Error: File '$JAR_FILE' không tồn tại!"
     exit 1
