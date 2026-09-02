@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tungnn.tutor.java.core.lib.io.filesystem.FileUtil;
+import tungnn.tutor.java.mime.FileMimeUtil;
 import tungnn.tutor.java.spring.tool.crawler.config.CrawlerConfig;
 import tungnn.tutor.java.spring.tool.crawler.model.CrawlRequest;
 import tungnn.tutor.java.spring.tool.crawler.model.CrawlResult;
@@ -113,6 +114,7 @@ public class CrawlService {
 
     return FileUtil.walk(inputDir).stream()
         .filter(Files::isRegularFile)
+        .filter(p -> ".txt".equals(FileMimeUtil.getExtension(FileMimeUtil.getMimeType(p))))
         .map(this::parseCourseSourceFile)
         .toList();
   }
