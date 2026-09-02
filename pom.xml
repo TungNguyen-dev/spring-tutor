@@ -73,9 +73,23 @@
 
     <build>
         <plugins>
+            <!-- Package the application into an executable JAR/WAR file -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Configure test execution -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        <!-- Enable experimental support in Byte Buddy to bypass version checks
+                        for preview/early-access JDKs (e.g., JDK 25) -->
+                        -Dnet.bytebuddy.experimental=true
+                    </argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>
