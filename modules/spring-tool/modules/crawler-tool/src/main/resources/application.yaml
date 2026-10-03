@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: crawler-tool
+crawler:
+  storage:
+    baseDir: storage/app/crawler
+  dir:
+    input: 01-todo
+    output: 02-result
+    done: 03-done

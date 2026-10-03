@@ -16,6 +16,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>crawler-tool</module>
+        <module>modules/crawler-tool</module>
+        <module>modules/document-translation-tool</module>
+        <module>modules/database-migration-tool</module>
     </modules>
 </project>

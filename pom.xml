@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Parent POM -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>4.0.8</version>
     </parent>
 
+    <!-- Project Identity -->
     <groupId>tungnn.tutor.java.spring</groupId>
     <artifactId>spring-tutor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -18,22 +20,29 @@
     <name>spring-tutor</name>
     <description>Spring Tutor Parent Project</description>
 
+    <!-- Shared Properties -->
     <properties>
         <java.version>25</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- Custom Dependency Versions -->
         <java-tutor.version>1.0.0</java-tutor.version>
     </properties>
 
+    <!-- Modules -->
     <modules>
         <module>modules/spring-core</module>
         <module>modules/spring-infrastructure</module>
         <module>modules/spring-tool</module>
     </modules>
 
+    <!-- Directly Inherited Dependencies -->
     <dependencies>
-        <!-- Spring Boot Starters -->
+
+        <!-- ===== Spring Boot Starters ===== -->
+
+        <!-- Spring Boot Core (Exclude Default Logging) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -45,52 +54,54 @@
             </exclusions>
         </dependency>
 
+        <!-- Log4j2 Logging Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
-        <!-- Custom Tutor Starters -->
+        <!-- ===== Custom Tutor Starters ===== -->
+
+        <!-- Java Infrastructure Starter -->
         <dependency>
             <groupId>tungnn.tutor.java.infrastructure</groupId>
             <artifactId>java-infrastructure-starter</artifactId>
             <version>${java-tutor.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>tungnn.tutor.java.tool</groupId>
-            <artifactId>java-tool-starter</artifactId>
-            <version>${java-tutor.version}</version>
-        </dependency>
+        <!-- ===== Testing ===== -->
 
-        <!-- Testing -->
+        <!-- Spring Boot Test Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
+    <!-- Directly Inherited Build Configuration -->
     <build>
         <plugins>
-            <!-- Package the application into an executable JAR/WAR file -->
+
+            <!-- Spring Boot Executable Packaging Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Configure test execution -->
+            <!-- Unit Test Runner -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>
-                        <!-- Enable experimental support in Byte Buddy to bypass version checks
-                        for preview/early-access JDKs (e.g., JDK 25) -->
+                        <!-- Enable experimental support in Byte Buddy for JDK preview versions (e.g., JDK 25) -->
                         -Dnet.bytebuddy.experimental=true
                     </argLine>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

@@ -16,6 +16,7 @@
 
     <modules>
         <module>modules/spring-genai</module>
+        <module>modules/spring-shell</module>
     </modules>
 
     <!-- All modules under spring-infrastructure are libraries.

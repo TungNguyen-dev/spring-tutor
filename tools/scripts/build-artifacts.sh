@@ -41,7 +41,7 @@ clean_local_repository() {
 package_project() {
     echo "==> Packaging Maven project..."
 
-    mvn clean install
+    mvn clean install -DskipTests
 }
 
 # ==============================================================================

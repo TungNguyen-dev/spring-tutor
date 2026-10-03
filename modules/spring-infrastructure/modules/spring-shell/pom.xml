@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent POM -->
+    <parent>
+        <groupId>tungnn.tutor.java.spring.infrastructure</groupId>
+        <artifactId>spring-infrastructure</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <!-- Project Identity -->
+    <artifactId>spring-shell</artifactId>
+
+    <name>spring-shell</name>
+    <description>Spring Shell Infrastructure Module</description>
+
+    <!-- Shared Properties -->
+    <properties>
+        <java.version>25</java.version>
+
+        <!-- Spring Shell Version -->
+        <spring-shell.version>4.0.2</spring-shell.version>
+    </properties>
+
+    <!-- Dependency Management -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Spring Shell Bill of Materials (BOM) -->
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Directly Inherited Dependencies -->
+    <dependencies>
+
+        <!-- Spring Shell Starter -->
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter</artifactId>
+        </dependency>
+
+        <!-- Spring Shell Test Starter -->
+        <dependency>
+            <groupId>org.springframework.shell</groupId>
+            <artifactId>spring-shell-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
